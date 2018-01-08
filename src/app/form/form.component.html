@@ -1,0 +1,25 @@
+<p>
+  form works!
+</p>
+<h2>Superhero: {{Superhero}}</h2>
+<input #messageInput [ngModel]="message" (keyup.enter)="getString(messageInput.value)"/>
+<button type="" (click)='getString(messageInput.value)'>add</button>
+<p>{{messageInput.value}}</p>
+
+<div *ngIf="message">
+	{{message}}
+</div>
+
+
+<div *ngFor="let item of heroes">
+	{{item.name}}
+</div>
+<h1>hero detail</h1>
+<div *ngIf="hero">
+	{{hero.name}}
+</div>
+
+<input #nameInput (keyup.enter)="passInput($event)" (blur)="passInput($event)"/>
+<button (click)="onClickMe(nameInput.value)">Click me!</button>
+<p>{{clickMessage}}</p>
+

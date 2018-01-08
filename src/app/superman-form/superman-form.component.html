@@ -1,0 +1,96 @@
+<p>
+	superman-form works!
+</p>
+<button type="" (click)="onReactive()" >Change Form</button>
+
+<div [hidden]="isReactive" class="container form-container pull-left">
+	<h2 class="col-lg-3">Reactive form</h2>
+	<h2>Create</h2>
+	<div [hidden]="submitted">
+		<form [formGroup]="supermanForm" autocomplete="false">
+			<div class="form-group">
+				<label for="name">Name</label>
+				<input type="text" class="form-control" id="name" required name="name" formControlName="name" #spy>
+				<br>TODO: input add class {{spy.className}}
+				<br>
+				<div *ngIf="supermanForm.controls['name'].errors && supermanForm.controls['name'].dirty"
+					class="alert alert-danger">
+					<div *ngIf="supermanForm.controls['name'].errors.required">
+						Name is required.
+					</div>
+					<div *ngIf="supermanForm.controls['name'].errors.patternInvalid">
+						name is not valid
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="email">email</label>
+				<input formControlName="email" type="text"  class="form-control" id="email"
+				name="email">
+			</div>
+			<div class="form-group">
+				<label for="power">Hero Power</label>
+				<select class="form-control"  id="power"
+					required
+					name="power">
+					<option *ngFor="let pow of power" [value]="pow">{{pow}}</option>
+				</select>
+				<button type="submit" class="btn btn-success" (click)='createSuperman(supermanForm.value);logValue(supermanForm.value);'>Submit</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+
+
+<div [hidden]="!isReactive" class="container form-container pull-left">
+	<h2>template-driven form</h2>
+	<h2>update</h2>
+	<div *ngIf="model">
+		<form (ngSubmit)="onSubmit()" #form="ngForm">
+			<div class="form-group">
+				<label for="name">Name</label>
+				<input type="text" class="form-control" id="name"
+				required
+				[(ngModel)]="model.name" name="name"
+				#name="ngModel">
+				<div [hidden]="name.valid || name.pristine"
+					class="alert alert-danger">
+					Name is required
+				</div>
+			</div>
+				<br>Data binding
+				<br>Name: {{model.name}}
+			<div class="form-group">
+				<label for="email">Alter Ego</label>
+				<input type="text" class="form-control" id="email"
+				[(ngModel)]="model.email" name="email">
+			</div>
+			
+			<div class="form-group">
+				<label for="power">Hero Power</label>
+				<select class="form-control" id="power"
+					required
+					>
+					<option *ngFor="let pow of power" [value]="pow">{{pow}}</option>
+				</select>
+				<div [hidden]="power.valid || power.pristine" class="alert alert-danger">
+					Power is required
+				</div>
+			</div>
+			<button type="submit" class="btn btn-success" (click)='logValue(form.value);onReactive();'>Submit</button>
+		</form>
+	</div>
+</div>
+
+
+
+
+<p [hidden]="shouldHide">Directives are awesome</p>
+<p [style.color]="'blue'">Directives are awesome</p>
+<h2>List modal</h2>
+<!-- <div *ngFor="let item of models$| async"> -->
+<div *ngFor="let item of models" >
+	<a (click)="getModel(item.id);" >{{item.id}}---{{item.name}}</a>
+</div>
